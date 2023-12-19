@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using yaDirectParser.Middlewares;
 using yaDirectParser.Models;
@@ -9,12 +10,15 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
+    private IMapper _mapper;
+
     private readonly yaDirectService _yaDirectService;
     
-    public HomeController(ILogger<HomeController> logger, yaDirectService yaDirectService)
+    public HomeController(ILogger<HomeController> logger, yaDirectService yaDirectService, IMapper mapper)
     {
         _logger = logger;
         _yaDirectService = yaDirectService;
+        _mapper = mapper;
     }
     
     public IActionResult Index()
@@ -35,7 +39,9 @@ public class HomeController : Controller
 
     public IActionResult AdsLayout()
     {
-        return Ok(yaDirectService.Result);
+        var ads = yaDirectService.Result?.ToArray();
+        var adViewModel = _mapper.Map<Ad[], AdViewModel[]>(ads);
+        return Ok(AdViewModel.SortByDate(adViewModel));
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

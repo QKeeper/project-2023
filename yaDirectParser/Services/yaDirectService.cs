@@ -188,7 +188,7 @@ public class yaDirectService
                 {
                     SelectionCriteria = new { Ids = adGroups.Select(value => value.Id).ToArray() },
                     FieldNames = new string[] { "Id" },
-                    TextAdFieldNames = new string[] {"Text", "Title", "Href", "VCardId"}
+                    TextAdFieldNames = new string[] {"Text", "Title", "Href"}
                 }
             };
 
