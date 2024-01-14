@@ -1,0 +1,29 @@
+[
+	{
+		"id": 3872258,
+		"textAd": {
+			"text": "Test sandbox banner 1 text",
+			"title": "Test sandbox banner 1",
+			"href": "http://www.yandex.ru",
+			"vCardId": 317135
+		}
+	},
+	{
+		"id": 3872259,
+		"textAd": {
+			"text": "Test sandbox banner 2 text",
+			"title": "Test sandbox banner 2",
+			"href": "http://www.yandex.ru",
+			"vCardId": 317135
+		}
+	},
+	{
+		"id": 3872260,
+		"textAd": {
+			"text": "Test sandbox banner 3 text",
+			"title": "Test sandbox banner 3",
+			"href": "http://www.yandex.ru",
+			"vCardId": 317135
+		}
+	}
+]

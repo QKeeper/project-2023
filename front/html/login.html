@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
+
+		<link rel="stylesheet" href="../css/reset.css" />
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="../css/login.css" />
+	</head>
+	<body>
+		<header>
+			<h1>Парсер рекламных объявлений</h1>
+		</header>
+		<script>
+			window.onload = function () {
+				window.YaAuthSuggest.init(
+					{
+						client_id: "3d1521abaf6f431d95945effad470a80",
+						response_type: "token",
+						redirect_uri: "https://qkeeper.github.io/token",
+					},
+					"https://qkeeper.github.io/",
+					{
+						view: "button",
+						parentId: "container",
+						buttonView: "main",
+						buttonTheme: "light",
+						buttonSize: "m",
+						buttonBorderRadius: 0,
+					}
+				)
+					.then(function (result) {
+						return result.handler();
+					})
+					.then(async function (data) {
+						console.log("Сообщение с токеном: ", data);
+						document.body.innerHTML += `Сообщение с токеном: ${JSON.stringify(data)}`;
+
+						let response = await fetch("https://26.145.207.158:7271/authentication", {
+							method: "GET",
+							headers: {
+								"Content-Type": "application/json",
+								Authorization: data.access_token,
+							},
+						});
+						if (response.ok) {
+							let json = await response.json();
+						} else {
+							alert("Ошибка HTTP: " + response.status);
+						}
+					})
+					.catch(function (error) {
+						console.log("Что-то пошло не так: ", error);
+						document.body.innerHTML += `Что-то пошло не так: ${JSON.stringify(error)}`;
+					});
+			};
+		</script>
+	</body>
+</html>
