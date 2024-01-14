@@ -31,11 +31,15 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    public IActionResult SuccessfulAuthentication()
+    [EnableCors("FreeForAllPolicy")]
+    [HttpGet]
+    [Route("authentication")]
+    public async Task SuccessfulAuthentication()
     {
-        _yaDirectService.InvokeAsync(HttpContext).GetAwaiter().GetResult();
-        return RedirectToAction("AdsLayout", "Home");
+        var token = HttpContext.Request.Headers.Authorization;
+        HttpContext.Session.SetString("AccessToken", token);
+        await _yaDirectService.InvokeAsync(HttpContext);
+        
     }
     [EnableCors("FreeForAllPolicy")]
     [HttpGet]
