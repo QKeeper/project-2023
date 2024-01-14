@@ -28,7 +28,7 @@ public class yaDirectService
 
     public async Task RequestToCampaigns(string token, string clientLogin)
     {
-        const string campaignsUrl = "https://api-sandbox.direct.yandex.com/json/v5/campaigns";
+        const string campaignsUrl = "https://api.direct.yandex.com/json/v5/campaigns";
         var request = new HttpRequestMessage(HttpMethod.Post, campaignsUrl);
         
         request.Headers.Add("Authorization", "Bearer " + token);
@@ -77,7 +77,7 @@ public class yaDirectService
     public async Task RequestToCampaignAdGroups(IEnumerable<Campaign> campaigns, string token, string clientLogin)
     {
         List<AdGroup> campaignAdGroups = new List<AdGroup>();
-        const string adGroupUrl = "https://api-sandbox.direct.yandex.com/json/v5/adgroups";
+        const string adGroupUrl = "https://api.direct.yandex.com/json/v5/adgroups";
         var request = new HttpRequestMessage(HttpMethod.Post, adGroupUrl);
 
         request.Headers.Add("Authorization", "Bearer " + token);
@@ -127,7 +127,7 @@ public class yaDirectService
     public async Task RequestToAdGroups(IEnumerable<AdGroup> adGroups, string token, string clientLogin)
     {
         List<Ad> ads = new List<Ad>();
-        const string adGroupUrl = "https://api-sandbox.direct.yandex.com/json/v5/ads";
+        const string adGroupUrl = "https://api.direct.yandex.com/json/v5/ads";
         var request = new HttpRequestMessage(HttpMethod.Post, adGroupUrl);
 
         request.Headers.Add("Authorization", "Bearer " + token);
@@ -175,7 +175,7 @@ public class yaDirectService
     }
     public async Task RequestToAds(IEnumerable<Ad> adGroups, string token, string clientLogin)
     {
-        const string adGroupUrl = "https://api-sandbox.direct.yandex.com/json/v5/ads";
+        const string adGroupUrl = "https://api.direct.yandex.com/json/v5/ads";
         var request = new HttpRequestMessage(HttpMethod.Post, adGroupUrl);
 
         request.Headers.Add("Authorization", "Bearer " + token);

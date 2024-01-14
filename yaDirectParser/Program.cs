@@ -51,6 +51,16 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FreeForAllPolicy",
+        policy =>
+        {
+            policy.WithOrigins("*")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 var app = builder.Build();
@@ -70,6 +80,7 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

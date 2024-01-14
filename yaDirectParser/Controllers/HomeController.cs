@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using yaDirectParser.Middlewares;
 using yaDirectParser.Models;
@@ -30,18 +31,24 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    public IActionResult SuccessfulAuthentication()
+    [EnableCors("FreeForAllPolicy")]
+    [HttpGet]
+    [Route("authentication")]
+    public async Task SuccessfulAuthentication()
     {
-        _yaDirectService.InvokeAsync(HttpContext).GetAwaiter().GetResult();
-        return RedirectToAction("AdsLayout", "Home");
+        var token = HttpContext.Request.Headers.Authorization;
+        HttpContext.Session.SetString("AccessToken", token);
+        await _yaDirectService.InvokeAsync(HttpContext);
+        
     }
-
-    public IActionResult AdsLayout()
+    [EnableCors("FreeForAllPolicy")]
+    [HttpGet]
+    [Route("layout")]
+    public async Task AdsLayout()
     {
         var ads = yaDirectService.Result?.ToArray();
         var adViewModel = _mapper.Map<Ad[], AdViewModel[]>(ads);
-        return Ok(AdViewModel.SortByDate(adViewModel));
+        await HttpContext.Response.WriteAsJsonAsync(AdViewModel.SortByDate(adViewModel));
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
